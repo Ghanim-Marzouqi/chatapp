@@ -2,7 +2,7 @@
 FROM node:14-alpine as build
 
 # Create Working Directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Add Environment Variable
 ENV PATH /app/node_modules/.bin:$PATH
@@ -11,7 +11,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 
 # Install Node Modules And Dependancies
-RUN npm install --silent
+RUN npm install
 
 # Copy All Files
 COPY . /app
