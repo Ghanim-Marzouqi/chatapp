@@ -16,15 +16,15 @@ const { User } = require("./models/User");
 const { Message } = require("./models/Message");
 const { Conversation } = require("./models/Conversation");
 
-// Load Environment Vraibales From (.env) File
-dotenv.config();
+// Load Environment Vraibales From (.env) File - Use Only For Development
+// dotenv.config();
 
 // Create Express Server
 const app = express();
 
 // Set Express Server Port
-const PORT = process.env.PORT;
-const HOST = process.env.HOST;
+const PORT = process.env.API_PORT;
+const HOST = process.env.API_HOST;
 
 // Use Middlewares
 app.use(cors());

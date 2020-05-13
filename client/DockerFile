@@ -4,17 +4,14 @@ FROM node:14-alpine as build
 # Create Working Directory
 WORKDIR /usr/src/app
 
-# Add Environment Variable
-ENV PATH /app/node_modules/.bin:$PATH
-
 # Copy package.json files To Working Directory
-COPY package.json /app/package.json
+COPY package*.json ./
 
 # Install Node Modules And Dependancies
 RUN npm install
 
 # Copy All Files
-COPY . /app
+COPY . .
 
 # Build React App
 RUN npm run build
@@ -23,7 +20,7 @@ RUN npm run build
 FROM nginx:1.18.0-alpine
 
 # Copy React Build To Nginx Public Folder
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
 # Expose Port 80
 EXPOSE 80
