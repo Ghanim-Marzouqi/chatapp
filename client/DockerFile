@@ -1,0 +1,32 @@
+# Node Image
+FROM node:14-alpine as build
+
+# Create Working Directory
+WORKDIR /app
+
+# Add Environment Variable
+ENV PATH /app/node_modules/.bin:$PATH
+
+# Copy package.json files To Working Directory
+COPY package.json /app/package.json
+
+# Install Node Modules And Dependancies
+RUN npm install --silent
+
+# Copy All Files
+COPY . /app
+
+# Build React App
+RUN npm run build
+
+# Nginx Image
+FROM nginx:1.18.0-alpine
+
+# Copy React Build To Nginx Public Folder
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose Port 80
+EXPOSE 80
+
+# Run Command To Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
